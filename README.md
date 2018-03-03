@@ -12,3 +12,20 @@ This algorithm is based off of the algorithm used by Kaizen from
 event[0]. You can see how it works in this short video.
 
 https://www.youtube.com/watch?v=bCJw4hQkPj4	
+
+### Things already working
+
+ - Tag recognition: input text is parsed into a series of tags, in order 
+of where they appear in the input string.
+
+### To-do
+
+ - Dynamic emotions: right now the AI's emotion is hard-coded to Calm. 
+The emotion should change based on what the player says, and the emotion 
+should affect how the AI responds.
+ - Integration with Peacenet: so we can actually grab the player's 
+reputation.
+ - Pattern recognition: being able to filter out garbage from the 
+recognized tag list and grab the closest recognized pattern.
+ - Synonyms: being able to alter the output message replacing certain 
+words with random synonyms so that the AI doesn't repeat the same stuff.

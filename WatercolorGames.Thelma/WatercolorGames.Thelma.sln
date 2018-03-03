@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatercolorGames.Thelma", "WatercolorGames.Thelma.csproj", "{A330A497-8C42-459B-9FD3-86066A02BD43}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatercolorGames.Thelma.Demo", "..\WatercolorGames.Thelma.Demo\WatercolorGames.Thelma.Demo.csproj", "{9AC12204-B73D-46A8-8C20-A89FC02C13B8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A330A497-8C42-459B-9FD3-86066A02BD43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A330A497-8C42-459B-9FD3-86066A02BD43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A330A497-8C42-459B-9FD3-86066A02BD43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A330A497-8C42-459B-9FD3-86066A02BD43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AC12204-B73D-46A8-8C20-A89FC02C13B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AC12204-B73D-46A8-8C20-A89FC02C13B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AC12204-B73D-46A8-8C20-A89FC02C13B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AC12204-B73D-46A8-8C20-A89FC02C13B8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
