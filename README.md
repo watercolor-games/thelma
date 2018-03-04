@@ -17,6 +17,10 @@ https://www.youtube.com/watch?v=bCJw4hQkPj4
 
  - Tag recognition: input text is parsed into a series of tags, in order 
 of where they appear in the input string.
+ - Pattern recognition: When the input tags are retrieved, a Levenshtein 
+Distance algorithm is applied to find the closest valid tag pattern 
+understood by the AI. If the closest distance is above the length of the 
+input tag list, the AI won't understand you.
 
 ### To-do
 
@@ -25,7 +29,5 @@ The emotion should change based on what the player says, and the emotion
 should affect how the AI responds.
  - Integration with Peacenet: so we can actually grab the player's 
 reputation.
- - Pattern recognition: being able to filter out garbage from the 
-recognized tag list and grab the closest recognized pattern.
  - Synonyms: being able to alter the output message replacing certain 
 words with random synonyms so that the AI doesn't repeat the same stuff.
