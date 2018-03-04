@@ -21,13 +21,15 @@ of where they appear in the input string.
 Distance algorithm is applied to find the closest valid tag pattern 
 understood by the AI. If the closest distance is above the length of the 
 input tag list, the AI won't understand you.
+ - Dynamic emotions: The AI's emotion changes based on what you say to 
+it and how strong your relationship with the AI is. The emotion dictates 
+how the AI responds to you.
 
 ### To-do
 
- - Dynamic emotions: right now the AI's emotion is hard-coded to Calm. 
-The emotion should change based on what the player says, and the emotion 
-should affect how the AI responds.
- - Integration with Peacenet: so we can actually grab the player's 
-reputation.
+ - Integration with Peacenet: so we can store the AI's current emotion 
+and relationship with the player within the server's database.
  - Synonyms: being able to alter the output message replacing certain 
 words with random synonyms so that the AI doesn't repeat the same stuff.
+ - Multiple responses per tag pattern+emotion: so the AI doesn't say the 
+same thing over again.

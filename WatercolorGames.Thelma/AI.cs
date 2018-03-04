@@ -8,18 +8,24 @@ namespace WatercolorGames.Thelma
 {
     public abstract class AI
     {
+        private float _rawEmotion = 2f;
+        private float _rawRelationship = 1f;
+
         protected abstract IEnumerable<KeyValuePair<string, string[]>> InputTags
         {
             get;
         }
 
-        protected abstract IEnumerable<string[]> Patterns
+        protected abstract IEnumerable<string> Patterns
         {
             get;
         }
 
-        protected abstract string GetResponse(string[] pattern, PlayerReputation playerRep, Emotion emotion);
-
+        protected abstract IEnumerable<Response> Responses
+        {
+            get;
+        }
+        
         private int Levenshtein(string s, string t)
         {
             if (s == null || t == null)
@@ -53,6 +59,11 @@ namespace WatercolorGames.Thelma
             return matrix[n, m];
         }
 
+        private int GetFeeling()
+        {
+            return (((int)Math.Round(_rawRelationship))*3) + (int)Math.Round(_rawEmotion);
+        }
+        
         public string Respond(string input)
         {
             Dictionary<string, int> tags = new Dictionary<string, int>();
@@ -78,10 +89,29 @@ namespace WatercolorGames.Thelma
                 return "I don't understand.";
 
             string joined = string.Join(" ", pattern).Trim();
-            var closestOrder = Patterns.OrderBy(x => Levenshtein(joined, string.Join(" ", x).Trim()));
-            if (Levenshtein(joined, string.Join(" ", closestOrder.First()).Trim()) >= joined.Length)
+            var closestOrder = Patterns.OrderBy(x => Levenshtein(joined, x));
+            if (Levenshtein(joined, closestOrder.First()) >= joined.Length)
                 return "I don't understand.";
-            return GetResponse(closestOrder.First(), PlayerReputation.Grayhat, Emotion.Calm);
+            var response = Responses.FirstOrDefault(x => x.Pattern == closestOrder.First() && x.Feeling == GetFeeling());
+            if (string.IsNullOrWhiteSpace(response.Text))
+                return "I don't understand.";
+            _rawEmotion += response.EmotionIncrease;
+            _rawRelationship += response.RelationshipIncrease;
+            if (_rawEmotion < 0)
+                _rawEmotion = 0;
+            if (_rawEmotion > 2)
+                _rawEmotion = 2;
+            if (_rawRelationship < 0)
+                _rawRelationship = 0;
+            if (_rawRelationship > 2)
+                _rawRelationship = 2;
+
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine("raw emotion: {0}\nraw relationship: {1}", _rawEmotion, _rawRelationship);
+            Console.ForegroundColor = ConsoleColor.White;
+
+            return response.Text;
+            
         }
 
     }
@@ -93,10 +123,77 @@ namespace WatercolorGames.Thelma
         Calm = 2
     }
 
-    public enum PlayerReputation
+    public enum PlayerRelationship
     {
-        Blackhat = 0,
-        Grayhat = 1,
-        Whitehat = 2
+        Hate = 0,
+        Neutral = 1,
+        Love = 2
+    }
+
+    public enum FeelingAdjust
+    {
+        HugeDetriment = 0,
+        Detriment = 1,
+        None = 2,
+        Increase = 3,
+        HugeIncrease = 4
+    }
+
+    public struct Response
+    {
+        public string Text { get; private set; }
+        public int Feeling { get; private set; }
+        public string Pattern { get; private set; }
+        public float EmotionIncrease { get; private set; }
+        public float RelationshipIncrease { get; private set; }
+
+
+        public Response(string text, string pattern, PlayerRelationship rep, Emotion emotion, FeelingAdjust emotionAdjust = FeelingAdjust.None, FeelingAdjust repAdjust = FeelingAdjust.None)
+        {
+            Text = text;
+            Pattern = pattern;
+            Feeling = ((int)rep * 3) + (int)emotion;
+
+            EmotionIncrease = 0;
+            RelationshipIncrease = 0;
+
+            switch (repAdjust)
+            {
+                case FeelingAdjust.HugeDetriment:
+                    RelationshipIncrease = -0.25F;
+                    break;
+                case FeelingAdjust.Detriment:
+                    RelationshipIncrease = -0.1f;
+                    break;
+                case FeelingAdjust.None:
+                    RelationshipIncrease = 0;
+                    break;
+                case FeelingAdjust.Increase:
+                    RelationshipIncrease = 0.1f;
+                    break;
+                case FeelingAdjust.HugeIncrease:
+                    RelationshipIncrease = 0.25F;
+                    break;
+            }
+
+            switch (emotionAdjust)
+            {
+                case FeelingAdjust.HugeDetriment:
+                    EmotionIncrease = -0.25F;
+                    break;
+                case FeelingAdjust.Detriment:
+                    EmotionIncrease = -0.1f;
+                    break;
+                case FeelingAdjust.None:
+                    EmotionIncrease = 0;
+                    break;
+                case FeelingAdjust.Increase:
+                    EmotionIncrease = 0.1f;
+                    break;
+                case FeelingAdjust.HugeIncrease:
+                    EmotionIncrease = 0.25F;
+                    break;
+            }
+        }
     }
 }
